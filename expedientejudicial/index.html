@@ -58,13 +58,16 @@
           Papa.parse(csv, {
             header: true,
             skipEmptyLines: true,
+            quoteChar: '"',
+            escapeChar: '"',
             complete: function(results) {
-              const headers = Object.keys(results.data[0]);
+              const rows = results.data.filter(row => row && Object.keys(row).length > 2);
+              const headers = Object.keys(rows[0]);
               const table = document.createElement('table');
               table.innerHTML = '<thead><tr>' +
                 headers.map(h => `<th>${h}</th>`).join('') +
                 '</tr></thead><tbody>' +
-                results.data.map(row => '<tr>' +
+                rows.map(row => '<tr>' +
                   headers.map(h => `<td>${row[h] || ''}</td>`).join('') +
                 '</tr>').join('') + '</tbody>';
               document.getElementById('tabla-expediente').appendChild(table);
@@ -75,4 +78,6 @@
   </script>
 </body>
 </html>
+
+
 
