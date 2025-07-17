@@ -67,7 +67,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    fetch('expediente_index2_FINAL.json')
+    fetch('expediente_index2_FINAL_clean.json')
       .then(r => r.json())
       .then(data => {
         const rows = data.filter(row => row && Object.values(row).some(v => (v || '').trim() !== ""));
