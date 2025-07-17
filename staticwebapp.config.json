@@ -1,0 +1,9 @@
+{
+  "routes": [
+    {
+      "route": "/*",
+      "statusCode": 301,
+      "redirect": "https://terrauniversalis.com"
+    }
+  ]
+}
