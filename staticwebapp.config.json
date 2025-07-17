@@ -1,9 +1,5 @@
 {
-  "routes": [
-    {
-      "route": "/*",
-      "statusCode": 301,
-      "redirect": "https://terrauniversalis.com"
-    }
-  ]
+  "navigationFallback": {
+    "rewrite": "/index.html"
+  }
 }
