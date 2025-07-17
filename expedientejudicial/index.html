@@ -61,7 +61,7 @@
             quoteChar: '"',
             escapeChar: '"',
             complete: function(results) {
-              const rows = results.data.filter(row => row && Object.keys(row).length > 2);
+              const rows = results.data.filter(row => row && Object.values(row).some(v => v.trim() !== ""));
               const headers = Object.keys(rows[0]);
               const table = document.createElement('table');
               table.innerHTML = '<thead><tr>' +
