@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,34 +12,47 @@
       text-align: center;
       padding: 2em;
     }
+
     img.logo {
       max-width: 300px;
       margin-bottom: 1em;
     }
-    h1 { font-weight: normal; margin-bottom: 0.2em; }
-    p { margin-top: 0; color: #ccc; }
+
+    h1 {
+      font-weight: normal;
+      margin-bottom: 0.2em;
+    }
+
+    p {
+      margin-top: 0;
+      color: #ccc;
+    }
+
     #tabla-expediente {
-      overflow-y: auto;
       margin-top: 2em;
-      max-height: none;
+      overflow-x: auto;
     }
+
     table {
-      border-collapse: collapse;
       width: 100%;
+      border-collapse: collapse;
     }
+
     th, td {
       border: 1px solid #444;
-      padding: 8px;
+      padding: 10px;
       vertical-align: top;
       word-break: break-word;
-      white-space: pre-line;
-      overflow-wrap: anywhere;
-      line-height: 1.6;
+      white-space: pre-wrap; /* ✅ permite saltos de línea visibles */
+      overflow-wrap: break-word; /* ✅ quiebra palabras largas */
+      text-align: left;
     }
+
     th {
       background-color: #222;
       color: #ffef9f;
     }
+
     tr:nth-child(even) {
       background-color: #1a1a1a;
     }
@@ -55,7 +67,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      fetch('expediente_index2.csv')
+      fetch('expediente_index2_FINAL.csv')
         .then(r => r.text())
         .then(csv => {
           Papa.parse(csv, {
@@ -63,16 +75,18 @@
             skipEmptyLines: true,
             quoteChar: '"',
             escapeChar: '"',
-            complete: function(results) {
+            complete: function (results) {
               const rows = results.data.filter(row => row && Object.values(row).some(v => v.trim() !== ""));
               const headers = Object.keys(rows[0]);
               const table = document.createElement('table');
-              table.innerHTML = '<thead><tr>' +
+              table.innerHTML =
+                '<thead><tr>' +
                 headers.map(h => `<th>${h}</th>`).join('') +
                 '</tr></thead><tbody>' +
                 rows.map(row => '<tr>' +
                   headers.map(h => `<td>${row[h] || ''}</td>`).join('') +
-                '</tr>').join('') + '</tbody>';
+                  '</tr>').join('') +
+                '</tbody>';
               document.getElementById('tabla-expediente').appendChild(table);
             }
           });
