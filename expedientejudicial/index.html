@@ -4,44 +4,53 @@
   <meta charset="UTF-8">
   <title>Expediente Judicial | Terrauniversalis</title>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-  <style>
-    body {
-      background-color: #111;
-      color: #eee;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      padding: 2em;
-    }
-    img.logo {
-      max-width: 300px;
-      margin-bottom: 1em;
-    }
-    h1 { font-weight: normal; margin-bottom: 0.2em; }
-    p { margin-top: 0; color: #ccc; }
-    #tabla-expediente {
-      max-height: 80vh;
-      overflow-y: auto;
-      margin-top: 2em;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid #444;
-      padding: 8px;
-      word-break: break-word;
-      white-space: normal;
-      vertical-align: top;
-    }
-    th {
-      background-color: #222;
-      color: #ffef9f;
-    }
-    tr:nth-child(even) {
-      background-color: #1a1a1a;
-    }
-  </style>
+<style>
+  body {
+    background-color: #111;
+    color: #eee;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    padding: 2em;
+  }
+
+  img.logo {
+    max-width: 300px;
+    margin-bottom: 1em;
+  }
+
+  h1 { font-weight: normal; margin-bottom: 0.2em; }
+  p { margin-top: 0; color: #ccc; }
+
+  #tabla-expediente {
+    overflow-y: auto;
+    margin-top: 2em;
+    max-height: none; /* ✅ quita el límite de altura para permitir mostrar texto completo */
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    border: 1px solid #444;
+    padding: 8px;
+    vertical-align: top;
+    word-break: break-word;
+    white-space: pre-line;   /* ✅ respeta saltos de línea */
+    overflow-wrap: anywhere; /* ✅ permite quiebres largos */
+    line-height: 1.6;        /* ✅ legibilidad mejorada */
+  }
+
+  th {
+    background-color: #222;
+    color: #ffef9f;
+  }
+
+  tr:nth-child(even) {
+    background-color: #1a1a1a;
+  }
+</style>
 </head>
 <body>
   <img src="../logo-terrauniversalis-transparente.png" alt="Terrauniversalis Logo" class="logo">
