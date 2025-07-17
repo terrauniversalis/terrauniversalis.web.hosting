@@ -4,70 +4,75 @@
   <meta charset="UTF-8">
   <title>Expediente Judicial | Terrauniversalis</title>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-<style>
-  body {
-    background-color: #111;
-    color: #eee;
-    font-family: 'Segoe UI', sans-serif;
-    text-align: center;
-    padding: 2em;
-  }
-  img.logo {
-    max-width: 300px;
-    margin-bottom: 1em;
-  }
-  h1 { font-weight: normal; margin-bottom: 0.2em; }
-  p { margin-top: 0; color: #ccc; }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 2em;
-  }
-  th, td {
-    border: 1px solid #444;
-    padding: 8px;
-    word-break: break-word;
-    white-space: normal;
-    vertical-align: top;
-  }
-  th {
-    background-color: #222;
-    color: #ffef9f;
-  }
-  tr:nth-child(even) {
-    background-color: #1a1a1a;
-  }
-</style>
-
-
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 2em;
+    }
+    img.logo {
+      max-width: 300px;
+      margin-bottom: 1em;
+    }
+    h1 { font-weight: normal; margin-bottom: 0.2em; }
+    p { margin-top: 0; color: #ccc; }
+    #tabla-expediente {
+      max-height: 80vh;
+      overflow-y: auto;
+      margin-top: 2em;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 8px;
+      word-break: break-word;
+      white-space: normal;
+      vertical-align: top;
+    }
+    th {
+      background-color: #222;
+      color: #ffef9f;
+    }
+    tr:nth-child(even) {
+      background-color: #1a1a1a;
+    }
+  </style>
 </head>
 <body>
   <img src="../logo-terrauniversalis-transparente.png" alt="Terrauniversalis Logo" class="logo">
   <h1>Expediente Judicial Estructurado</h1>
   <p>Consulta pública trazada por @alfonso</p>
 
+  <div id="tabla-expediente"></div>
+
   <script>
-    fetch('expediente.csv')
-      .then(r => r.text())
-      .then(csv => {
-        Papa.parse(csv, {
-          header: true,
-          skipEmptyLines: true,
-          complete: function(results) {
-            const headers = Object.keys(results.data[0]);
-            const table = document.createElement('table');
-            table.innerHTML = '<thead><tr>' +
-              headers.map(h => `<th>${h}</th>`).join('') +
-              '</tr></thead><tbody>' +
-              results.data.map(row => '<tr>' +
-                headers.map(h => `<td>${row[h] || ''}</td>`).join('') +
-              '</tr>').join('') + '</tbody>';
-            document.body.appendChild(table);
-          }
+    document.addEventListener('DOMContentLoaded', function () {
+      fetch('expediente.csv')
+        .then(r => r.text())
+        .then(csv => {
+          Papa.parse(csv, {
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+              const headers = Object.keys(results.data[0]);
+              const table = document.createElement('table');
+              table.innerHTML = '<thead><tr>' +
+                headers.map(h => `<th>${h}</th>`).join('') +
+                '</tr></thead><tbody>' +
+                results.data.map(row => '<tr>' +
+                  headers.map(h => `<td>${row[h] || ''}</td>`).join('') +
+                '</tr>').join('') + '</tbody>';
+              document.getElementById('tabla-expediente').appendChild(table);
+            }
+          });
         });
-      });
+    });
   </script>
 </body>
 </html>
-
 
