@@ -68,21 +68,21 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     fetch('expediente_index2_FINAL_clean.json')
-      .then(r => r.json())
-      .then(data => {
-        const rows = data.filter(row => row && Object.values(row).some(v => (v || '').trim() !== ""));
-        const headers = Object.keys(rows[0]);
-        const table = document.createElement('table');
-        table.innerHTML =
-          '<thead><tr>' +
-          headers.map(h => `<th>${h}</th>`).join('') +
-          '</tr></thead><tbody>' +
-          rows.map(row => '<tr>' +
-            headers.map(h => `<td>${row[h] || ''}</td>`).join('') +
-            '</tr>').join('') +
-          '</tbody>';
-        document.getElementById('tabla-expediente').appendChild(table);
-      });
+     .then(r => r.json())
+.then(data => {
+  const rows = Array.isArray(data) ? data : Object.values(data);  // ✔️ esta línea es la clave
+  const headers = Object.keys(rows[0]);
+  const table = document.createElement('table');
+  table.innerHTML =
+    '<thead><tr>' +
+    headers.map(h => `<th>${h}</th>`).join('') +
+    '</tr></thead><tbody>' +
+    rows.map(row => '<tr>' +
+      headers.map(h => `<td>${row[h] || ''}</td>`).join('') +
+      '</tr>').join('') +
+    '</tbody>';
+  document.getElementById('tabla-expediente').appendChild(table);
+});
   });
 </script>
 </body>
