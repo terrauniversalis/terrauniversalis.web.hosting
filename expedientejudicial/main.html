@@ -65,33 +65,25 @@
 
   <div id="tabla-expediente"></div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      fetch('expediente_index2_FINAL.csv')
-        .then(r => r.text())
-        .then(csv => {
-          Papa.parse(csv, {
-            header: true,
-            skipEmptyLines: true,
-            quoteChar: '"',
-            escapeChar: '"',
-            complete: function (results) {
-              const rows = results.data.filter(row => row && Object.values(row).some(v => v.trim() !== ""));
-              const headers = Object.keys(rows[0]);
-              const table = document.createElement('table');
-              table.innerHTML =
-                '<thead><tr>' +
-                headers.map(h => `<th>${h}</th>`).join('') +
-                '</tr></thead><tbody>' +
-                rows.map(row => '<tr>' +
-                  headers.map(h => `<td>${row[h] || ''}</td>`).join('') +
-                  '</tr>').join('') +
-                '</tbody>';
-              document.getElementById('tabla-expediente').appendChild(table);
-            }
-          });
-        });
-    });
-  </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    fetch('expediente_index2_FINAL.json')
+      .then(r => r.json())
+      .then(data => {
+        const rows = data.filter(row => row && Object.values(row).some(v => (v || '').trim() !== ""));
+        const headers = Object.keys(rows[0]);
+        const table = document.createElement('table');
+        table.innerHTML =
+          '<thead><tr>' +
+          headers.map(h => `<th>${h}</th>`).join('') +
+          '</tr></thead><tbody>' +
+          rows.map(row => '<tr>' +
+            headers.map(h => `<td>${row[h] || ''}</td>`).join('') +
+            '</tr>').join('') +
+          '</tbody>';
+        document.getElementById('tabla-expediente').appendChild(table);
+      });
+  });
+</script>
 </body>
 </html>
