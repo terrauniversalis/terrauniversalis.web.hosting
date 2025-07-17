@@ -61,7 +61,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      fetch('amparog.csv')
+      fetch('expediente.csv')
         .then(r => r.text())
         .then(csv => {
           Papa.parse(csv, {
