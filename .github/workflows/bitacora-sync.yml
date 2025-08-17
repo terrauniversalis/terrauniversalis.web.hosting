@@ -17,17 +17,16 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install deps
-        run: npm i @azure/msal-node
-
       - name: Pull from Graph and build JSON
         env:
-          TENANT_ID: ${{ secrets.TENANT_ID }}
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          SITE_ID: ${{ secrets.SITE_ID }}
-          LIST_ID: ${{ secrets.LIST_ID }}
+          AZURE_TENANT_ID:     ${{ secrets.TENANT_ID }}
+          AZURE_CLIENT_ID:     ${{ secrets.CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          BITACORA_SITE_ID:    ${{ secrets.SITE_ID }}
+          BITACORA_LIST_ID:    ${{ secrets.LIST_ID }}
+          BITACORA_OUT_DIR:    public
         run: node scripts/pull-bitacora.mjs
+
 
       - name: Commit JSON
         run: |
