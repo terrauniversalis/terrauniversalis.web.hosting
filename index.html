@@ -11,30 +11,46 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       font-family: 'Segoe UI', sans-serif;
+      color: #ccc;
+      padding: 2em;
+    }
+    header {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 2em;
     }
     img {
       max-width: 90vw;
-      max-height: 50vh;
-      margin-bottom: 2em;
+      max-height: 30vh;
+      margin-bottom: 1em;
     }
-    a {
+    nav {
+      margin: 1em 0;
+    }
+    nav a {
       display: inline-block;
       background-color: #2b7a78;
       color: #fff;
-      padding: 1em 2em;
-      font-size: 1.2em;
+      padding: 0.6em 1.2em;
+      font-size: 1em;
       text-decoration: none;
       border-radius: 5px;
       border: 1px solid #1f5f5b;
+      margin: 0 0.3em;
+    }
+    nav a:hover {
+      background-color: #3fa39f;
+    }
+    #app {
+      max-width: 800px;
+      text-align: center;
     }
     p {
-      color: #ccc;
-      font-size: 0.9em;
       margin-top: 1em;
-      max-width: 600px;
-      text-align: center;
+      font-size: 0.9em;
+      line-height: 1.4em;
     }
   </style>
 
@@ -48,46 +64,62 @@
   </script>
 </head>
 <body>
-  <img src="logo-terrauniversalis-transparente.png" alt="Terra Universalis Logo">
+  <header>
+    <img src="logo-terrauniversalis-transparente.png" alt="Terra Universalis Logo">
+    <nav>
+      <a href="/" data-link>Inicio</a>
+      <a href="/lex" data-link>Lex</a>
+      <a href="/lux" data-link>Lux</a>
+      <a href="/sono" data-link>Sono</a>
+      <a href="/agro" data-link>Agro</a>
+      <a href="/bitacora" data-link>Bitácora</a>
+      <a href="/vortex" data-link>Vortex</a>
+      <a href="/presente-ancestral" data-link>Presente Ancestral</a>
+    </nav>
+  </header>
 
-<!-- 🔘 Botón institucional -->
-<a href="expedientejudicial/index.html">
-  ⚖️ Ingreso al Expediente Judicial Digital
-</a>
+  <main id="app"></main>
 
-<p>
-  Este expediente está cifrado con <strong>hash SHA-256</strong> y publicado conforme a la legislación mexicana de transparencia y documentación institucional.
-</p>
+  <script>
+    const routes = {
+      "/": `
+        <a href="expedientejudicial/index.html" style="background:#2b7a78; color:#fff; padding:1em 2em; border-radius:5px; text-decoration:none;">
+          ⚖️ Ingreso al Expediente Judicial Digital
+        </a>
+        <p>Este expediente está cifrado con <strong>hash SHA-256</strong> y publicado conforme a la legislación mexicana de transparencia.</p>
+        <p style="margin-top:2em; color:#bbb;">
+          📄 <strong>Terrauniversalis · Datos Abiertos</strong><br>
+          <a href="expedientejudicial/expediente.csv" style="color:#ffef9f; text-decoration:underline;">
+            Ver expediente.csv
+          </a>
+        </p>
+      `,
+      "/lex": `<h2>📚 Lex Universalis</h2><p>Normas, principios y manual único de políticas.</p>`,
+      "/lux": `<h2>💡 Lux Universalis</h2><p>Principios éticos, transparencia y claridad.</p>`,
+      "/sono": `<h2>🎵 Sono Universalis</h2><p>Todo lo relativo al sistema universal de audio.</p>`,
+      "/agro": `<h2>🌱 Agro Universalis</h2><p>Documentación agrícola y sistemas de sustentabilidad.</p>`,
+      "/bitacora": `<h2>📓 Bitácora</h2><p>Registro cronológico estructurado de hechos y evidencias.</p>`,
+      "/vortex": `<h2>🌀 Mayan Vortex</h2><p>Sistema operativo de integración documental y cósmica.</p>`,
+      "/presente-ancestral": `<h2>⏳ Presente Ancestral</h2><p>Vinculación con memoria ancestral y presente continuo.</p>`
+    };
 
-<p style="margin-top: 3em; color: #bbb; font-size: 0.9em; text-align: center;">
-  📄 <strong>Terrauniversalis · Datos Abiertos</strong><br>
-  Consulta directa del archivo estructurado:<br>
-  <a href="expedientejudicial/expediente.csv" style="color: #ffef9f; text-decoration: underline;">
-    Ver expediente.csv
-  </a>
-</p>
-<p style="margin-top: 3em; color: #888; font-size: 0.9em; text-align: center; font-style: italic;">
-  🧭 <strong>Fundamento Ético</strong><br>
-  Esta plataforma no sólo estructura hechos jurídicos: también respeta el consentimiento como forma civilizatoria.<br>
-  Cada entrada, cada vínculo, cada hash publicado representa un acto técnico con dignidad pública.<br>
-  Nada aquí fue impuesto — todo fue ofrecido como memoria compartida.
-</p>
-<p style="margin-top: 2em; color: #aaa; font-size: 0.9em; text-align: center;">
-  🔐 <strong>¿Qué es SHA-256?</strong><br>
-  SHA-256 es un algoritmo criptográfico de tipo “hash” que garantiza que cada documento digital tenga una firma única e irrepetible.<br>
-  Es utilizado por gobiernos, bancos y fuerzas armadas para proteger la integridad de certificados, comunicaciones y archivos oficiales.<br>
-  El Departamento de Defensa de EE.UU. lo emplea en sus sistemas de autenticación y certificados digitales, y forma parte de los estándares federales de seguridad definidos por NIST.<br>
-  En este expediente, el uso de SHA-256 asegura que cada entrada publicada pueda ser verificada, sin posibilidad de alteración sin dejar rastro.
-</p>
-  <p style="margin-top: 2em; color: #aaa; font-size: 0.9em; text-align: center;">
-  🛡️ <strong>Estatura Tecnológica y Jurídica</strong><br>
-  El uso de SHA-256 en este expediente no es una curiosidad técnica, es una declaración pública:<br>
-  Este mismo estándar criptográfico es utilizado por gobiernos, instituciones bancarias, organismos multilaterales y sistemas de defensa nacional.<br>
-  Terrauniversalis adopta esta tecnología no sólo por seguridad, sino como forma de respeto a la memoria jurídica, la consulta ciudadana y la documentación pública.<br>
-  Aquí, la tecnología no oculta — respalda.
-</p>
+    function router() {
+      const path = window.location.pathname;
+      const app = document.getElementById("app");
+      app.innerHTML = routes[path] || `<h2>404</h2><p>Ruta no encontrada.</p>`;
+    }
 
+    window.addEventListener("popstate", router);
+
+    document.addEventListener("click", e => {
+      if (e.target.matches("[data-link]")) {
+        e.preventDefault();
+        history.pushState(null, "", e.target.href);
+        router();
+      }
+    });
+
+    router();
+  </script>
 </body>
 </html>
-
-
