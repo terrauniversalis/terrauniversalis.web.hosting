@@ -4,99 +4,54 @@
   <meta charset="UTF-8" />
   <title>Terrauniversalis</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <style>
-    :root {
-      --bg: #000;
-      --fg: #ccc;
-      --muted: #9aa0a6;
-      --brand: #2b7a78;
-      --brand-2: #3fa39f;
-      --pill-debug: #6264A7;
-      --pill-info:  #107C10;
-      --pill-warn:  #FF8C00;
-      --pill-error: #D13438;
-      --card: #0f1115;
-      --border: #2a2d34;
+    :root{
+      --bg:#000; --fg:#ccc; --muted:#9aa0a6;
+      --brand:#2b7a78; --brand-2:#3fa39f;
+      --pill-debug:#6264A7; --pill-info:#107C10; --pill-warn:#FF8C00; --pill-error:#D13438;
+      --card:#0f1115; --border:#2a2d34;
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
-      color: var(--fg);
-      padding: 2em 1em;
+    *{box-sizing:border-box}
+    body{
+      margin:0; min-height:100vh; background:var(--bg); color:var(--fg);
+      font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+      display:flex; flex-direction:column; align-items:center; padding:2em 1em;
     }
-    header {
-      width: 100%;
-      max-width: 1100px;
-      text-align: center;
-      margin-bottom: 2em;
+    header{width:100%; max-width:1100px; text-align:center; margin-bottom:2em}
+    header img{max-width:90vw; max-height:28vh; margin-bottom:1em}
+    nav{margin:1em 0; display:flex; gap:.5em; flex-wrap:wrap; justify-content:center}
+    nav a{
+      display:inline-block; background:var(--brand); color:#fff; padding:.6em 1.1em;
+      text-decoration:none; border-radius:10px; border:1px solid #1f5f5b; font-size:.95em;
     }
-    header img {
-      max-width: 90vw;
-      max-height: 28vh;
-      margin-bottom: 1em;
-    }
-    nav { margin: 1em 0; display:flex; gap:.5em; flex-wrap:wrap; justify-content:center; }
-    nav a {
-      display: inline-block;
-      background-color: var(--brand);
-      color: #fff;
-      padding: 0.6em 1.1em;
-      font-size: 0.95em;
-      text-decoration: none;
-      border-radius: 10px;
-      border: 1px solid #1f5f5b;
-    }
-    nav a:hover { background-color: var(--brand-2); }
-    #app { width:100%; max-width: 1100px; text-align: left; }
-    p { margin-top: .8em; font-size: .98em; line-height: 1.5; color: var(--fg); }
-    .muted { color: var(--muted); }
+    nav a:hover{background:var(--brand-2)}
+    #app{width:100%; max-width:1100px; text-align:left}
+    p{margin-top:.8em; font-size:.98em; line-height:1.5}
+    .muted{color:var(--muted)}
 
-    /* Tarjeta / tabla bitácora */
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1rem;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.25);
-    }
-    h2 { margin: 0 0 .5rem 0; }
-    table.log { width:100%; border-collapse: collapse; color:#ddd; font-size: .95rem; }
-    .log th, .log td { border-bottom:1px solid var(--border); padding:.6rem .5rem; text-align:left; vertical-align: top; }
-    .log th { color:#e7e7e7; font-weight:600; }
-    .pill {
-      display:inline-block; padding:2px 10px; border-radius: 999px; font-weight:700; color:#fff; font-size:.8rem;
-    }
-    .lvl0 { background: var(--pill-debug); } /* DEBUG */
-    .lvl1 { background: var(--pill-info); }  /* INFO  */
-    .lvl2 { background: var(--pill-warn); }  /* WARN  */
-    .lvl3 { background: var(--pill-error);}  /* ERROR */
-
-    .btn {
-      appearance: none; border:1px solid var(--border); background:#141922; color:#eaeaea;
-      padding:.6rem .9rem; border-radius:10px; cursor:pointer; font-weight:600;
-    }
-    .btn:hover { background:#1a2030; }
-    .row { display:flex; gap:.6rem; align-items:center; flex-wrap:wrap; }
+    .card{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1rem; box-shadow:0 8px 22px rgba(0,0,0,.25)}
+    h2{margin:0 0 .5rem 0}
+    table.log{width:100%; border-collapse:collapse; color:#ddd; font-size:.95rem}
+    .log th,.log td{border-bottom:1px solid var(--border); padding:.6rem .5rem; text-align:left; vertical-align:top}
+    .log th{color:#e7e7e7; font-weight:600}
+    .pill{display:inline-block; padding:2px 10px; border-radius:999px; font-weight:700; color:#fff; font-size:.8rem}
+    .lvl0{background:var(--pill-debug)} .lvl1{background:var(--pill-info)} .lvl2{background:var(--pill-warn)} .lvl3{background:var(--pill-error)}
+    .btn{appearance:none; border:1px solid var(--border); background:#141922; color:#eaeaea; padding:.6rem .9rem; border-radius:10px; cursor:pointer; font-weight:600}
+    .btn:hover{background:#1a2030}
+    .row{display:flex; gap:.6rem; align-items:center; flex-wrap:wrap}
   </style>
 
-  <!-- 📊 Microsoft Clarity – Analytics -->
+  <!-- Clarity (analytics) -->
   <script>
-    (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
       t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
       y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "sg91l3b7rh");
   </script>
 
-  <!-- MSAL (Auth) -->
-  <script src="https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js"></script>
+  <!-- MSAL (usar defer) -->
+  <script src="https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js" defer></script>
 </head>
 <body>
   <header>
@@ -116,56 +71,58 @@
   <main id="app"></main>
 
   <script>
-    // ====== CONFIG MSAL + GRAPH (ajustado a tus IDs) ======
+    // ===== CONFIG =====
     const CLIENT_ID = "a29931f3-410d-4316-b582-5139303c77d0";
     const TENANT_ID = "837f64ee-b685-4a9d-b085-6dfef6829d62";
     const SITE_ID   = "terrauniversalis.sharepoint.com,30518bf9-395d-40a6-8cec-677d78d17236,a74ba19e-889a-46b9-932e-39ca7665283a";
     const LIST_ID   = "63ebe210-ce78-4949-95b8-3337c51cfb4d"; // Raw
 
     const MSAL_CONFIG = {
-      auth: {
-        clientId: CLIENT_ID,
-        authority: `https://login.microsoftonline.com/${TENANT_ID}`,
-        redirectUri: window.location.origin
-      },
-      cache: { cacheLocation: "localStorage", storeAuthStateInCookie: true }
+      auth: { clientId: CLIENT_ID, authority: `https://login.microsoftonline.com/${TENANT_ID}`, redirectUri: window.location.origin },
+      cache:{ cacheLocation:"localStorage", storeAuthStateInCookie:true }
     };
 
-    let msalInstance; // Se crea bajo demanda para evitar "Cannot access before initialization"
+    // ===== Singleton MSAL robusto (evita "Cannot access before initialization") =====
+    window.__msalApp = window.__msalApp || null;
 
-    function htmlEscape(s) {
+    async function getMsalApp(){
+      if (window.__msalApp) return window.__msalApp;
+      // Esperar a que cargue el script de MSAL (por si tardó)
+      const wait = ms => new Promise(r => setTimeout(r, ms));
+      let tries = 0;
+      while((!window.msal || !window.msal.PublicClientApplication) && tries < 60){
+        await wait(50); tries++;
+      }
+      const app = new msal.PublicClientApplication(MSAL_CONFIG);
+      try{ if(typeof app.initialize==="function") await app.initialize(); }catch{}
+      try{ await app.handleRedirectPromise(); }catch(e){ console.warn("MSAL redirect:", e); }
+      window.__msalApp = app;
+      return app;
+    }
+
+    function htmlEscape(s){
       return String(s ?? "")
         .replaceAll("&","&amp;").replaceAll("<","&lt;")
         .replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");
     }
 
-    async function ensureAuth(scopes=["User.Read","Sites.Read.All"]) {
-      if (!msalInstance) {
-        msalInstance = new msal.PublicClientApplication(MSAL_CONFIG);
-        if (typeof msalInstance.initialize === "function") {
-          try { await msalInstance.initialize(); } catch {}
-        }
-        try { await msalInstance.handleRedirectPromise(); } catch(e){ console.warn(e); }
+    async function ensureAuth(scopes=["User.Read","Sites.Read.All"]){
+      const app = await getMsalApp();
+      let account = app.getAllAccounts()[0];
+      if(!account){
+        await app.loginPopup({ scopes });
+        account = app.getAllAccounts()[0];
       }
-
-      let account = msalInstance.getAllAccounts()[0];
-      if (!account) {
-        // login popup para no abandonar la SPA
-        await msalInstance.loginPopup({ scopes });
-        account = msalInstance.getAllAccounts()[0];
-      }
-
-      const req = { scopes, account };
-      try {
-        const r = await msalInstance.acquireTokenSilent(req);
+      try{
+        const r = await app.acquireTokenSilent({ scopes, account });
         return r.accessToken;
-      } catch {
-        const r = await msalInstance.acquireTokenPopup(req);
+      }catch{
+        const r = await app.acquireTokenPopup({ scopes, account });
         return r.accessToken;
       }
     }
 
-    // ====== RENDERIZADO DE RUTAS ======
+    // ===== VISTAS =====
     const routes = {
       "/": `
         <div class="card">
@@ -177,16 +134,14 @@
           </div>
           <p>
             <a href="expedientejudicial/index.html"
-               style="display:inline-block; background:#2b7a78; color:#fff; padding:1em 1.6em; border-radius:10px; text-decoration:none; border: 1px solid #1f5f5b;">
+               style="display:inline-block; background:#2b7a78; color:#fff; padding:1em 1.6em; border-radius:10px; text-decoration:none; border:1px solid #1f5f5b;">
               ⚖️ Ingreso al Expediente Judicial Digital
             </a>
           </p>
           <p>Este expediente está cifrado con <strong>hash SHA-256</strong> y publicado conforme a la legislación mexicana de transparencia.</p>
           <p class="muted" style="margin-top:1.4em;">
             📄 <strong>Terrauniversalis · Datos Abiertos</strong><br />
-            <a href="expedientejudicial/expediente.csv" style="color:#ffef9f; text-decoration:underline;">
-              Ver expediente.csv
-            </a>
+            <a href="expedientejudicial/expediente.csv" style="color:#ffef9f; text-decoration:underline;">Ver expediente.csv</a>
           </p>
         </div>
       `,
@@ -198,27 +153,24 @@
       "/presente-ancestral": `<div class="card"><h2>⏳ Presente Ancestral</h2><p>Vinculación con memoria ancestral y presente continuo.</p></div>`
     };
 
-    async function renderBitacora() {
-      const app = document.getElementById("app");
-      app.innerHTML = `
+    async function renderBitacora(){
+      const appNode = document.getElementById("app");
+      appNode.innerHTML = `
         <div class="card">
           <h2>📓 Bitácora</h2>
           <p class="muted">Cargando registros recientes desde SharePoint/Graph…</p>
-        </div>
-      `;
+        </div>`;
 
-      try {
+      try{
         const token = await ensureAuth();
         const url = `https://graph.microsoft.com/v1.0/sites/${encodeURIComponent(SITE_ID)}/lists/${LIST_ID}/items` +
                     `?$expand=fields($select=Title,numero,Created)&$orderby=createdDateTime desc&$top=50`;
-
-        const resp = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-        if (!resp.ok) throw new Error(`Graph ${resp.status}`);
-
+        const resp = await fetch(url, { headers:{ Authorization:`Bearer ${token}` }});
+        if(!resp.ok) throw new Error(\`Graph \${resp.status}\`);
         const data = await resp.json();
         const items = Array.isArray(data.value) ? data.value : [];
 
-        const rows = items.map(it => {
+        const rows = items.map(it=>{
           const f = it.fields || {};
           const dt = new Date(f.Created || it.createdDateTime || Date.now());
           const when = dt.toLocaleString();
@@ -231,7 +183,7 @@
           </tr>`;
         }).join("");
 
-        app.innerHTML = `
+        appNode.innerHTML = `
           <div class="card">
             <div class="row" style="justify-content:space-between;">
               <h2 style="margin:.2rem 0">📓 Bitácora</h2>
@@ -244,57 +196,49 @@
               <thead><tr><th>Fecha</th><th>Nivel</th><th>Mensaje</th></tr></thead>
               <tbody>${rows || `<tr><td colspan="3" class="muted">Sin registros.</td></tr>`}</tbody>
             </table>
-          </div>
-        `;
+          </div>`;
 
         document.getElementById("btnRefresh")?.addEventListener("click", renderBitacora);
-        document.getElementById("btnSignOut")?.addEventListener("click", async () => {
-          try {
-            const acc = msalInstance?.getAllAccounts?.()[0];
-            if (acc) await msalInstance.logoutPopup({ account: acc });
-          } finally {
-            location.reload();
-          }
+        document.getElementById("btnSignOut")?.addEventListener("click", async ()=>{
+          try{
+            const app = await getMsalApp();
+            const acc = app.getAllAccounts()[0];
+            if(acc) await app.logoutPopup({ account: acc });
+          } finally { location.reload(); }
         });
 
-      } catch (e) {
+      }catch(e){
         console.error(e);
-        app.innerHTML = `
+        appNode.innerHTML = `
           <div class="card">
             <h2>📓 Bitácora</h2>
             <p style="color:#f55">No se pudo cargar la bitácora: ${htmlEscape(e.message)}</p>
             <button class="btn" id="btnRetry">Reintentar</button>
-          </div>
-        `;
+          </div>`;
         document.getElementById("btnRetry")?.addEventListener("click", renderBitacora);
       }
     }
 
-    function currentPath() {
-      // normaliza "/" (sin trailing slash)
+    // ===== Router SPA =====
+    function currentPath(){
       const p = window.location.pathname.replace(/\/+$/, "");
       return p === "" ? "/" : p;
     }
-
-    function router() {
+    function router(){
       const path = currentPath();
       const app = document.getElementById("app");
-      if (path === "/bitacora") { renderBitacora(); return; }
+      if(path === "/bitacora"){ renderBitacora(); return; }
       app.innerHTML = routes[path] || `<div class="card"><h2>404</h2><p>Ruta no encontrada.</p></div>`;
     }
-
-    // Enlaces SPA
     window.addEventListener("popstate", router);
-    document.addEventListener("click", (e) => {
+    document.addEventListener("click", (e)=>{
       const a = e.target.closest("[data-link]");
-      if (a && a.getAttribute("href")) {
+      if(a && a.getAttribute("href")){
         e.preventDefault();
         history.pushState(null, "", a.getAttribute("href"));
         router();
       }
     });
-
-    // Primer render
     window.addEventListener("DOMContentLoaded", router);
   </script>
 </body>
