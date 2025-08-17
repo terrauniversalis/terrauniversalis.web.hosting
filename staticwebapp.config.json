@@ -1,0 +1,24 @@
+{
+  "routes": [
+    { "route": "/", "rewrite": "/index.html" },
+    { "route": "/lex", "rewrite": "/index.html" },
+    { "route": "/lux", "rewrite": "/index.html" },
+    { "route": "/sono", "rewrite": "/index.html" },
+    { "route": "/agro", "rewrite": "/index.html" },
+    { "route": "/bitacora", "rewrite": "/index.html" },
+    { "route": "/vortex", "rewrite": "/index.html" },
+    { "route": "/presente-ancestral", "rewrite": "/index.html" }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "/*.css", "/*.js", "/images/*", "/css/*", "/js/*"]
+  },
+  "responseOverrides": {
+    "404": { "rewrite": "/index.html", "statusCode": 200 }
+  },
+  "globalHeaders": {
+    "X-Frame-Options": "SAMEORIGIN",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  }
+}
