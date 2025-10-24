@@ -1,0 +1,33 @@
+// CONFIG Bitácora Terra Universalis (Graph Toolkit)
+window.BITACORA_CONFIG = {
+  // ← pega aquí el Application (client) ID de tu app registrada en Entra
+  clientId: "<<<APPLICATION_CLIENT_ID>>>",
+
+  // Tenant bloqueado (más estricto que 'common')
+  authority: "https://login.microsoftonline.com/751b2060-e398-44e2-98a6-597f2ea20692",
+
+  // Debe existir como Redirect URI en tu app SPA
+  redirectUri: "https://www.terrauniversalis.com/bitacora/",
+
+  // Permisos delegados requeridos
+  scopes: ["User.Read", "Sites.ReadWrite.All"],
+
+  // IDs directos (ya confirmados)
+  siteId: "terrauniversalis.sharepoint.com,30518bf9-395d-40a6-8cec-677d78d17236,a74ba19e-889a-46b9-932e-39ca7665283a",
+  listId: "<<<LIST_ID_mayanos_bitacora_live>>>", // si aún no lo tienes, déjalo vacío: ""
+
+  // Fallback por nombre (se usa solo si listId está vacío)
+  siteHostname: "terrauniversalis.sharepoint.com",
+  sitePath: "sites/TerraUniversalis",
+  listDisplayName: "mayanos_bitacora_live",
+
+  // Mapeo de columnas (internal names)
+  fieldMap: {
+    title: "Title",
+    description: "Descripcion",
+    system: "SistemaRelacionado",
+    date: "FechaEvento",
+    url: "Enlace",
+    hash: "Hash"
+  }
+};
