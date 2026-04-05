@@ -28,10 +28,22 @@ jobs:
           BITACORA_OUT_DIR:    .
         run: node scripts/pull-bitacora.mjs
 
+      - name: Debug generated file
+        run: |
+          pwd
+          ls -la
+          test -f bitacora.json && echo "bitacora.json exists" || echo "bitacora.json missing"
+          if [ -f bitacora.json ]; then
+            wc -c bitacora.json
+            head -n 20 bitacora.json
+          fi
+
       - name: Commit JSON
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git status
           git add bitacora.json
+          git status
           git commit -m "chore: update bitacora feed" || echo "no changes"
           git push
