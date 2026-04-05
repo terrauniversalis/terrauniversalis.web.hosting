@@ -3,19 +3,20 @@ name: Sync Bitacora from SharePoint
 on:
   schedule:
     - cron: "*/30 * * * *"   # cada 30 min
-  workflow_dispatch: {}       # ejecutar manualmente
+  workflow_dispatch: {}
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "22"
 
       - name: Pull from Graph and build JSON
         env:
@@ -26,7 +27,6 @@ jobs:
           BITACORA_LIST_ID:    ${{ secrets.LIST_ID }}
           BITACORA_OUT_DIR:    public
         run: node scripts/pull-bitacora.mjs
-
 
       - name: Commit JSON
         run: |
