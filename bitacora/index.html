@@ -1,1 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Bitácora (crudo)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #000;
+      color: #00ff9c;
+      font-family: monospace;
+    }
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <h2>bitacora.json</h2>
+  <pre id="out">cargando...</pre>
 
+  <script>
+    fetch('/bitacora.json')
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('out').textContent =
+          JSON.stringify(data, null, 2);
+      })
+      .catch(err => {
+        document.getElementById('out').textContent =
+          'ERROR: ' + err;
+      });
+  </script>
+</body>
+</html>
