@@ -2,37 +2,143 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <title>Bitácora (crudo)</title>
+  <title>Bitácora | terrauniversalis</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     body {
       margin: 0;
-      padding: 20px;
+      padding: 24px;
       background: #000;
-      color: #00ff9c;
-      font-family: monospace;
+      color: #eaeaea;
+      font-family: Arial, sans-serif;
     }
-    pre {
-      white-space: pre-wrap;
+
+    h1 {
+      margin: 0 0 8px;
+      color: #00ff9c;
+    }
+
+    .meta {
+      margin: 0 0 20px;
+      color: #9adbbf;
+      font-size: 14px;
+    }
+
+    .item {
+      border: 1px solid #1f1f1f;
+      background: #0f0f0f;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 0 0 16px;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #00ff9c;
+      margin-bottom: 8px;
+    }
+
+    .row {
+      margin: 4px 0;
+      font-size: 14px;
+      line-height: 1.45;
       word-break: break-word;
+    }
+
+    .label {
+      color: #8fb3a1;
+      font-weight: 700;
+    }
+
+    .desc {
+      margin-top: 10px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    .empty,
+    .error {
+      padding: 16px;
+      border-radius: 8px;
+      background: #111;
+    }
+
+    .error {
+      color: #ff7b7b;
     }
   </style>
 </head>
 <body>
-  <h2>bitacora.json</h2>
-  <pre id="out">cargando...</pre>
+  <h1>Bitácora</h1>
+  <div id="meta" class="meta">cargando...</div>
+  <div id="app"></div>
 
   <script>
+    const app = document.getElementById('app');
+    const meta = document.getElementById('meta');
+
     fetch('/bitacora.json')
-      .then(r => r.json())
-      .then(data => {
-        document.getElementById('out').textContent =
-          JSON.stringify(data, null, 2);
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error('No se pudo cargar bitacora.json');
+        }
+        return r.json();
       })
-      .catch(err => {
-        document.getElementById('out').textContent =
-          'ERROR: ' + err;
+      .then((data) => {
+        const items = Array.isArray(data.items) ? data.items : [];
+        meta.textContent =
+          `Registros: ${items.length} · Generado: ${data.generatedAt || 's/d'}`;
+
+        if (!items.length) {
+          app.innerHTML = '<div class="empty">No hay registros.</div>';
+          return;
+        }
+
+        app.innerHTML = items.map((item) => {
+          const f = item.fields || {};
+          const titulo =
+            f.Title || f.titulo || f.uid || `Registro ${item.id}`;
+          const fecha =
+            f.timestamp || item.createdDateTime || 's/f';
+          const agente =
+            f.agente || 's/d';
+          const sistema =
+            f.sistema || '';
+          const area =
+            f.area || '';
+          const estatus =
+            f.estatus || '';
+          const descripcion =
+            f.descripcion || '';
+
+          return `
+            <article class="item">
+              <div class="title">${escapeHtml(titulo)}</div>
+              <div class="row"><span class="label">ID:</span> ${escapeHtml(item.id || '')}</div>
+              <div class="row"><span class="label">Fecha:</span> ${escapeHtml(fecha)}</div>
+              <div class="row"><span class="label">Agente:</span> ${escapeHtml(agente)}</div>
+              <div class="row"><span class="label">Sistema:</span> ${escapeHtml(sistema)}</div>
+              <div class="row"><span class="label">Área:</span> ${escapeHtml(area)}</div>
+              <div class="row"><span class="label">Estatus:</span> ${escapeHtml(estatus)}</div>
+              <div class="desc">${escapeHtml(descripcion)}</div>
+            </article>
+          `;
+        }).join('');
+      })
+      .catch((err) => {
+        meta.textContent = 'Error';
+        app.innerHTML = `<div class="error">${escapeHtml(String(err))}</div>`;
       });
+
+    function escapeHtml(v) {
+      return String(v)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
   </script>
 </body>
 </html>
